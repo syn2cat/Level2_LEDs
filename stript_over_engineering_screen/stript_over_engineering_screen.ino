@@ -33,7 +33,6 @@ int dataPin  = 9;
 int clockPin = 10;
 
 LPD8806 strip = LPD8806(NUM_LEDS, dataPin, clockPin);
-//Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // Convenient 2D point structure
 struct Point {
@@ -68,7 +67,7 @@ void loop() {
   byte row, col;
   
   // For each row...
-  for( row=0; row<16; row++ ) {
+  for( row=0; row<8; row++ ) {
     float row_f = float(row);  // Optimization: Keep a floating point value of the row number, instead of recasting it repeatedly.
     
     // For each column...
@@ -99,10 +98,11 @@ void loop() {
       color_2 *= color_2 * color_4;
       color_3 *= color_3 * color_4;
       color_4 *= color_4;
+
+      pixel = 8 * row + col;
       
       // Scale the color up to 0..7 . Max brightness is 7.
       strip.setPixelColor(pixel, strip.Color(color_1, color_2, color_3));
-      //strip.setPixelColor(pixel, strip.Color(255, 0, 0));
       strip.setPixelColor(127-pixel, strip.Color(color_1, color_2, color_3));
     }
   }
